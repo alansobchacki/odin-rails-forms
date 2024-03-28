@@ -1,6 +1,27 @@
-<%= form_tag(users_path) do %>
-  <!-- No need to manually include authenticity token -->
+<!-- final mode: using #form_with helpers -->
+<%= form_with(model: @user, url: users_path) do |f| %>
+  <div>
+    <%= f.label :username, "User Name:" %>
+    <%= f.text_field :username, id: "name", placeholder: "Enter your username" %>
+  </div>
 
+  <div>
+    <%= f.label :email, "Email:" %>
+    <%= f.text_field :email, id: "email", placeholder: "Example@youremail.com" %>
+  </div>
+
+  <div>
+    <%= f.label :password, "Password:" %>
+    <%= f.password_field :password, id: "password", placeholder: "Enter your password" %>
+  </div>
+
+  <div>
+    <%= f.submit "Submit" %>
+  </div>
+<% end %>
+
+<!-- second mode: using #form_tag helpers
+<%= form_tag(users_path) do %>
   <div>
     <%= label_tag :username, "User Name:" %>
     <%= text_field_tag 'user[username]', nil, id: "name" %>
@@ -20,3 +41,18 @@
     <%= submit_tag "Submit" %>
   </div>
 <% end %>
+-->
+
+<!-- first mode: using regular erb HTML code
+<form action="<%= users_path %>" method="post" accept-charset="UTF-8">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+
+  <label for="name">User Name:</label>
+  <input type="text" id="name" name="user[username]"><br><br>
+  <label for="email">Email:</label>
+  <input type="text" id="email" name="user[email]"><br><br>
+  <label for="password">Password:</label>
+  <input type="text" id="password" name="user[password]"><br><br>
+  <input type="submit" value="Submit">
+</form>
+-->
